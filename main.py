@@ -1,10 +1,8 @@
-#from pyautogui import *#
 from tkinter import ttk
 from tkinter import *
 import time
 import ctypes
 import sys
-import os
 
 root = Tk()
 root.title('AutoClicks')
@@ -20,24 +18,25 @@ cps = int(file_settings_cps.readline())
 file_settings_cps.close()
 
 
-
-def StateFalse(self):
+def state_false():
     global state
     global x
-    if state == True:
+    if state is True:
         state = False
         x = 0
         print('False')
 
-def StateTrue(self):
-     global state
-     global x
-     if state == True:
+
+def state_true():
+    global state
+    global x
+    if state is True:
         state = True
-     else:
+    else:
         x = 0
         state = True
         print('True')
+
 
 def popupmsg():
     def change_num_of_clicks():
@@ -59,6 +58,7 @@ def popupmsg():
     label.pack()
     popup.mainloop()
 
+
 def close():
     sys.exit(0)
 
@@ -69,20 +69,19 @@ x = 0
 mainframe = ttk.Frame(root)
 mainframe.grid(padx=5, pady=5)
 
-startButton = ttk.Button(mainframe, text="Start", width=30, command=StateTrue).pack()
-stopButton = ttk.Button(mainframe, text="Stop", width=30, command=StateFalse).pack()
-button = ttk.Button(mainframe, text='Change num of clicks',width=30, command=popupmsg).pack()
+startButton = ttk.Button(mainframe, text="Start", width=30, command=state_true).pack()
+stopButton = ttk.Button(mainframe, text="Stop", width=30, command=state_false).pack()
+button = ttk.Button(mainframe, text='Change num of clicks', width=30, command=popupmsg).pack()
 close = ttk.Button(mainframe, text='Close', width=30, command=close).pack()
 
 
-root.bind("<F1>", StateTrue)
-root.bind("<F3>", StateFalse)
+root.bind("<F1>", state_true)
+root.bind("<F3>", state_false)
 
 while True:
     timekeeper += 1
-    if state == True:
+    if state is True:
         print('State True')
-
         print(state)
         time.sleep(cps / 1000)
         mouse.mouse_event(2, 0, 0, 0, 0)  # left mouse button down
